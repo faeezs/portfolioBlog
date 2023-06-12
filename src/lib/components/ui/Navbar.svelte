@@ -3,6 +3,12 @@
 	import Toggle from '$lib/components/ui/ThemeToggle.svelte';
 	import { page } from '$app/stores';
 
+	let showMenu = false;
+
+	function toggleNavbar() {
+		showMenu = !showMenu;
+	}
+
 	const navs = [
 		{
 			title: 'About',
@@ -19,7 +25,7 @@
 		{
 			title: 'Blog',
 			href: '/blog'
-		},
+		}
 	];
 
 	$: url = $page.url.href;
@@ -34,7 +40,7 @@
 		</a>
 
 		<!-- Navigation -->
-		<ul class="links">
+		<ul class="links {showMenu ? '' : 'hidden'}" on:click="{()=> showMenu = false}" on:keypress="{()=> showMenu = false}">
 			{#each navs as { title, href }}
 				<li>
 					<a {href} class:active={url.includes(href)} {title}>{title}</a>
@@ -48,6 +54,11 @@
 		<!-- Theme -->
 	</div>
 	<div class="toggle"><Toggle /></div>
+	<div class="menu-icon" on:click="{()=> showMenu = !showMenu}" on:keypress="{()=> showMenu = !showMenu}">
+		<div class="bar" />
+		<div class="bar" />
+		<div class="bar" />
+	</div>
 </nav>
 
 <style>
@@ -61,15 +72,9 @@
 		background-color: var(--surface-2);
 		color: var(--text-1);
 		box-shadow: var(--shadow-2);
-        
 	}
 
 	.title {
-		display: flex;
-		align-items: center;
-	}
-
-	.toggle {
 		display: flex;
 		align-items: center;
 	}
@@ -89,9 +94,25 @@
 		flex-grow: 0;
 	}
 
+	.hidden {
+		display: none;
+	}
+
 	a {
 		color: var(--text-1);
 		text-decoration: none;
+	}
+
+	.menu-icon {
+		/* display: none; */
+		margin-inline-start: var(--size-3);
+	}
+
+	.bar {
+		width: 20px;
+		height: 3px;
+		background-color: var(--text-2);
+		margin: 4px auto;
 	}
 
 	@media (min-width: 768px) {
@@ -112,6 +133,9 @@
 			display: flex;
 			gap: var(--size-7);
 			margin-block: 0;
+		}
+		.menu-icon{
+			display: none;
 		}
 	}
 	.active {
