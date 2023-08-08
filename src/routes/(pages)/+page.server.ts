@@ -3,7 +3,7 @@ import type { Post } from "$lib/types";
 export const load = async ({ fetch }) => {
 
     const getPosts = async (): Promise<Post[]> => {
-        const response = await fetch("/api/posts");
+        const response = await fetch("/api/posts.json");
         if (!response.ok) {
             throw new Error(`Failed to fetch posts. Status: ${response.status}`);
         }

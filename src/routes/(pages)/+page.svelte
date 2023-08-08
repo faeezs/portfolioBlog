@@ -25,7 +25,7 @@
 
 					<!-- <img src={image} alt={title} /> -->
 					<p>Published at {formatDate(published)}</p>
-					<p>{description.substring(0, 80)}</p>
+					<p>{description.substring(0, 160)}</p>
 				</div>
 			</div>
 		{/each}

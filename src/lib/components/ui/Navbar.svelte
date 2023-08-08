@@ -72,6 +72,7 @@
 		background-color: var(--surface-2);
 		color: var(--text-1);
 		box-shadow: var(--shadow-2);
+		z-index: var(--layer-1);
 	}
 
 	.title {
