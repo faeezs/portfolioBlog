@@ -8,6 +8,8 @@
 	// import 'open-props/media';
 
 	import '../app.css';
+
+	export const prerender = true
 </script>
 
 <Navbar />
