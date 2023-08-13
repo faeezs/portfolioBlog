@@ -1,8 +1,13 @@
 <script lang="ts">
+	// import { colors } from './../../../posts/utils/ScrollyUK.ts';
 	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';import { forceSimulation, forceX, forceY, forceCollide } from 'd3-force';
-	
-	import type { GenericObject} from '$lib/utils';
+	import type { Writable } from 'svelte/store';
+	import { forceSimulation, forceX, forceY, forceCollide } from 'd3-force';
+	// import { scaleSqrt } from 'd3-scale';
+	import { tweened } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
+
+	import type { GenericObject } from '$lib/utils';
 
 	/** @type {Number} [r=4] - The circle radius size in pixels. */
 	export let radius: number | null = null;
@@ -23,6 +28,7 @@
 		data: Writable<GenericObject[]>;
 		custom: Writable<{
 			type: string;
+			colors: string[] | string;
 		}>;
 		height: Writable<number>;
 		// eslint-disable-next-line @typescript-eslint/ban-types
@@ -33,22 +39,35 @@
 		rGet: Writable<Function>;
 		// eslint-disable-next-line @typescript-eslint/ban-types
 		r: Writable<Function>;
+		// eslint-disable-next-line @typescript-eslint/ban-types
+		y: Writable<Function>;
 		zRange: Writable<Array<number | string>>;
 	};
-	
-	const { data, xGet, height, rGet, r, yGet, custom } = getContext<Context>('LayerCake');
 
-	let radFunction: Function;
-	if (typeof $r === 'function') {
-		radFunction = (d:GenericObject) => $rGet(d);
-	} else if (typeof radius === 'number') {
-		radFunction = (d:number) => radius;
-	}
-	else{
-		radFunction = (d:undefined) => 5;
-	}
+	const { data, xGet, height, rGet, r, yGet, custom, y } = getContext<Context>('LayerCake');
 
-	// $: console.log($rKey)
+	const tweenOptions = {
+		delay: 0,
+		duration: 1000,
+		easing: cubicOut
+	};
+
+	$: radFunction = (d: GenericObject) => {
+		if (typeof $r === 'function') {
+			return $rGet(d);
+		} else if (typeof radius === 'number') {
+			return radius;
+		} else {
+			return 5;
+		}
+	};
+
+	// $: tweenedX = tweened(
+	// 	$data.map((d) => $xGet(d)),
+	// 	tweenOptions
+	// );
+
+	// $: console.log(radKeyFunction($data[0]));
 
 	$: simulation = forceSimulation($data)
 		.force(
@@ -80,10 +99,75 @@
 		}
 	}
 
+	const initialVals: { x: number[]; y: number[]; r: number[]; colors: string[] } = {
+		x: [],
+		y: [],
+		r: [],
+		colors: []
+	};
+
+	if ($custom.type == 'beeswarm') {
+		initialVals.y = $data.map((d) => +d['y']);
+	} else {
+		initialVals.y = $data.map((d) => $yGet(d));
+	}
+
+	initialVals.r = $data.map((d) => {
+		if (typeof $r === 'function') {
+			return $rGet(d);
+		} else if (typeof radius === 'number') {
+			return radius;
+		} else {
+			return 5;
+		}
+	});
+
+	initialVals.colors = $data.map((d) => {
+		if (typeof $custom.colors === 'string') {
+			return $custom.colors
+		} else {
+			return $custom.colors[4]
+		}
+	})
+
+	const tweenedY = tweened(initialVals.y, tweenOptions);
+	const tweenedR = tweened(initialVals.r, tweenOptions);
+	const tweenedColors = tweened(initialVals.colors, tweenOptions);
+
+	$: {
+		if ($custom.type == 'beeswarm') {
+			tweenedY.set($data.map((d) => +d['y']));
+		} else {
+			tweenedY.set($data.map((d) => $yGet(d)));
+		}
+	}
+
+	$: tweenedR.set($data.map((d) => radFunction(d)));
+
+	// $: {
+	// 	if (typeof $custom.colors === 'string') {
+	// 		tweenedColors.set($data.map((d) => 'blue'));
+	// 	} else {
+	// 		tweenedColors.set($data.map((d) => $custom.colors[4]));
+	// 	}
+	// }
+
+	// }
+
+	$: console.log('$tweenedColors', $tweenedColors[0]);
 </script>
 
-<g class="bee-group">
-	{#each $data as node}
-		<circle fill={'blue'} {stroke} stroke-width={strokeWidth} cx={$custom.type === 'beeswarm' ? node.x: $xGet(node)} cy={$custom.type === 'beeswarm' ? node.y: $yGet(node)} r={radFunction(node)} />
-	{/each}
-</g>
+{#if Math.max(...$tweenedY)}
+	<g class="bee-group">
+		{#each $data as node, i}
+			<circle
+				fill={typeof $custom.colors === 'string' ? $custom.colors : $custom.colors[4]}
+				{stroke}
+				stroke-width={strokeWidth}
+				cx={$custom.type === 'beeswarm' ? node.x : $xGet(node)}
+				cy={$tweenedY[i] ? $tweenedY[i] : 0}
+				r={$tweenedR[i] ? $tweenedR[i] : 0}
+			/>
+		{/each}
+	</g>
+{/if}

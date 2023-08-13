@@ -7,6 +7,9 @@ dependencies:
   '@fontsource/manrope':
     specifier: ^5.0.2
     version: 5.0.2
+  '@sveltejs/svelte-scroller':
+    specifier: ^2.0.7
+    version: 2.0.7
   '@types/d3-selection':
     specifier: ^3.0.5
     version: 3.0.5
@@ -545,6 +548,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@sveltejs/svelte-scroller@2.0.7:
+    resolution: {integrity: sha512-GuVePK4S0ubUJVYw2ixO1/8AVa792rNlhORXLeb2z7JHRKTqxOvg8Ye7sb4nZry/stgZEOlCpDV9qJeqHQKesw==}
+    dev: false
 
   /@sveltejs/vite-plugin-svelte-inspector@1.0.2(@sveltejs/vite-plugin-svelte@2.4.1)(svelte@3.59.1)(vite@4.3.9):
     resolution: {integrity: sha512-Cy1dUMcYCnDVV/hPLXa43YZJ2jGKVW5rA0xuNL9dlmYhT0yoS1g7+FOFSRlgk0BXKk/Oc7grs+8BVA5Iz2fr8A==}
