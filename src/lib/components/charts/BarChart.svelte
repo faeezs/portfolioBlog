@@ -5,7 +5,7 @@
 	import AxisX from '$lib/components/charts/shared/AxisX.svelte';
 	import AxisY from '$lib/components/charts/shared/AxisY.svelte';
 	import Title from '$lib/components/charts/shared/Title.svelte';
-	import { groupData, commas } from './ts/utils';
+	import { colors, commas } from '$lib/utils';
 
 	export let height: number | string | null = null; // number of pixels or valid css height string
 	export let title: string | null = null;
@@ -28,21 +28,7 @@
 	export let data: {
 		[key: string]: number | string;
 	}[];
-	// export let data;
 	export let color = null;
-	export let colors = color
-		? [color]
-		: [
-				'#206095',
-				'#A8BD3A',
-				'#003C57',
-				'#27A0CC',
-				'#118C7B',
-				'#F66068',
-				'#746CB1',
-				'#22D0B6',
-				'lightgrey'
-		  ];
 
 	let el; // Chart DOM element
 	let highlighted: string[]; // Chart highlight
@@ -51,32 +37,6 @@
 		x: (d: { [key: string]: string | number }) => d[xKey],
 		y: (d: { [key: string]: string | number }) => d[yKey]
 	});
-
-	// function clickOutside(node) {
-	// 	const handleClick = (event) => {
-	// 		if (node && !node.contains(event.target) && !event.defaultPrevented) {
-	// 			node.dispatchEvent(new CustomEvent('click_outside', node));
-	// 		}
-	// 	};
-
-	// 	document.addEventListener('click', handleClick, true);
-
-	// 	return {
-	// 		destroy() {
-	// 			document.removeEventListener('click', handleClick, true);
-	// 		}
-	// 	};
-	// }
-
-	// function handleClickOutside(event) {
-	// 	// alert('Click outside!');
-	// 	console.log(highlighted);
-	// 	highlighted = [];
-	// }
-
-	// if (extents.x) {
-	// 	console.log(extents.x.length);
-	// }
 </script>
 
 <p>Bar Chart</p>
@@ -101,7 +61,7 @@
 				y={yKey}
 				yScale={scaleBand().paddingInner(0.2)}
 				xDomain={[0, Number(extents.x[1])]}
-				zRange={colors}
+				zRange={colors.cat}
 				{data}
 				custom={{
 					type: 'bar',
