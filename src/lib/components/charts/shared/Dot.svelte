@@ -36,21 +36,25 @@
 		// eslint-disable-next-line @typescript-eslint/ban-types
 		yGet: Writable<Function>;
 		// eslint-disable-next-line @typescript-eslint/ban-types
+		zGet: Writable<Function>;
+		// eslint-disable-next-line @typescript-eslint/ban-types
 		rGet: Writable<Function>;
 		// eslint-disable-next-line @typescript-eslint/ban-types
 		r: Writable<Function>;
 		// eslint-disable-next-line @typescript-eslint/ban-types
 		y: Writable<Function>;
+		// eslint-disable-next-line @typescript-eslint/ban-types
+		z: Writable<Function>;	
 		zRange: Writable<Array<number | string>>;
 	};
 
-	const { data, xGet, height, rGet, r, yGet, custom, y } = getContext<Context>('LayerCake');
+	const { data, xGet, height, rGet, r, yGet, custom, y, zGet, z } = getContext<Context>('LayerCake');
 
-	const tweenOptions = {
-		delay: 0,
-		duration: 1000,
-		easing: cubicOut
-	};
+	// const tweenOptions = {
+	// 	delay: 0,
+	// 	duration: 1000,
+	// 	easing: cubicOut
+	// };
 
 	$: radFunction = (d: GenericObject) => {
 		if (typeof $r === 'function') {
@@ -99,75 +103,73 @@
 		}
 	}
 
-	const initialVals: { x: number[]; y: number[]; r: number[]; colors: string[] } = {
-		x: [],
-		y: [],
-		r: [],
-		colors: []
-	};
+	// const initialVals: { x: number[]; y: number[]; r: number[]; colors: string[] } = {
+	// 	x: [],
+	// 	y: [],
+	// 	r: [],
+	// 	colors: []
+	// };
 
-	if ($custom.type == 'beeswarm') {
-		initialVals.y = $data.map((d) => +d['y']);
-	} else {
-		initialVals.y = $data.map((d) => $yGet(d));
-	}
+	// if ($custom.type == 'beeswarm') {
+	// 	initialVals.y = $data.map((d) => +d['y']);
+	// } else {
+	// 	initialVals.y = $data.map((d) => $yGet(d));
+	// }
 
-	initialVals.r = $data.map((d) => {
-		if (typeof $r === 'function') {
-			return $rGet(d);
-		} else if (typeof radius === 'number') {
-			return radius;
-		} else {
-			return 5;
-		}
-	});
+	// initialVals.r = $data.map((d) => {
+	// 	if (typeof $r === 'function') {
+	// 		return $rGet(d);
+	// 	} else if (typeof radius === 'number') {
+	// 		return radius;
+	// 	} else {
+	// 		return 5;
+	// 	}
+	// });
 
-	initialVals.colors = $data.map((d) => {
-		if (typeof $custom.colors === 'string') {
-			return $custom.colors
-		} else {
-			return $custom.colors[4]
-		}
-	})
+	// initialVals.colors = $data.map((d) => {
+	// 	if (typeof $custom.colors === 'string') {
+	// 		return $custom.colors
+	// 	} else {
+	// 		return $custom.colors[4]
+	// 	}
+	// })
 
-	const tweenedY = tweened(initialVals.y, tweenOptions);
-	const tweenedR = tweened(initialVals.r, tweenOptions);
-	const tweenedColors = tweened(initialVals.colors, tweenOptions);
-
-	$: {
-		if ($custom.type == 'beeswarm') {
-			tweenedY.set($data.map((d) => +d['y']));
-		} else {
-			tweenedY.set($data.map((d) => $yGet(d)));
-		}
-	}
-
-	$: tweenedR.set($data.map((d) => radFunction(d)));
+	// const tweenedY = tweened(initialVals.y, tweenOptions);
+	// const tweenedR = tweened(initialVals.r, tweenOptions);
+	// const tweenedColors = tweened(initialVals.colors, tweenOptions);
 
 	// $: {
-	// 	if (typeof $custom.colors === 'string') {
-	// 		tweenedColors.set($data.map((d) => 'blue'));
+	// 	if ($custom.type == 'beeswarm') {
+	// 		tweenedY.set($data.map((d) => +d['y']));
 	// 	} else {
-	// 		tweenedColors.set($data.map((d) => $custom.colors[4]));
+	// 		tweenedY.set($data.map((d) => $yGet(d)));
 	// 	}
 	// }
 
-	// }
+	// $: tweenedR.set($data.map((d) => radFunction(d)));
 
-	$: console.log('$tweenedColors', $tweenedColors[0]);
+	$: console.log('$data', $data[0]);
+	$: console.log('zGet', $z($data[0]));
 </script>
 
-{#if Math.max(...$tweenedY)}
+<!-- {#if Math.max(...$tweenedY)} -->
 	<g class="bee-group">
 		{#each $data as node, i}
 			<circle
-				fill={typeof $custom.colors === 'string' ? $custom.colors : $custom.colors[4]}
+				fill={typeof $custom.colors === 'string' ? String($custom.colors) : String(node.density_color)}
 				{stroke}
 				stroke-width={strokeWidth}
 				cx={$custom.type === 'beeswarm' ? node.x : $xGet(node)}
-				cy={$tweenedY[i] ? $tweenedY[i] : 0}
-				r={$tweenedR[i] ? $tweenedR[i] : 0}
+				cy={$custom.type === 'beeswarm' ? node.y : $yGet(node)}
+				r={radFunction(node)}
 			/>
 		{/each}
 	</g>
-{/if}
+<!-- {/if} -->
+
+<style>
+	circle {
+		transition: all 1000ms ease;
+		/* fill: var(--brand) */
+	}
+</style>

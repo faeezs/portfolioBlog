@@ -43,6 +43,8 @@
 		[]
 	);
 
+	console.log('dataG', dataG);
+
 	const explore = false;
 
 	let count:number;
@@ -59,6 +61,11 @@
 		yKey: [undefined,undefined,'density','density','density'],
 		explore: [false,false,false,'density','density'],
 	}
+
+	console.log(data.district.indicators.map((d) => ({
+				...d,
+				parent_name: metadata.region.lookup[d.parent].name
+			})))
 </script>
 
 <Header
@@ -176,10 +183,11 @@
 				...d,
 				parent_name: metadata.region.lookup[d.parent].name
 			}))}
-			colors={scrollVals.explore[index] ? 'lightgrey' : colors.cat}
+			colors={scrollVals.explore[index] ? colors.cat:'lightgrey'}
 			xScale="log"
 			height={550}
 			xKey="area"
+			zKey="parent"
 			yKey={scrollVals.yKey[index]}
 			rKey={scrollVals.rKey[index]}
 			chartType={scrollVals.chartType[index]}

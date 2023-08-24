@@ -120,7 +120,7 @@
 		selected = null;
 	}
 
-	$: console.log(colorSelect);
+	// $: console.log(colorSelect);
 
 	const catInd = 1;
 
