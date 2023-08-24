@@ -30,6 +30,7 @@
 	export let xScale = 'linear';
 	export let xKey: string | undefined;
 	export let yKey: string | undefined;
+	export let zKey: string | undefined;
 	export let rKey: string | number | undefined;
 	export let padding = { top: 10, bottom: 20, left: 35, right: 35 };
 	export let chartType = 'beeswarm';
@@ -75,7 +76,7 @@
 				{padding}
 				x={xKey}
 				y={yKey}
-				z={undefined}
+				z={zKey}
 				r={rKey}
 				yDomain={[0, Number(extents.y[1])]}
 				rDomain={[0, Number(extents.r[1])]}

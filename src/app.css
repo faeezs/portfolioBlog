@@ -30,6 +30,35 @@ html {
 	--border-light: var(--stone-4);
 	--accent-light: var(--choco-6);
 
+	--cat-0-light: #6929c4;
+	--cat-1-light: #1192e8;
+	--cat-2-light: #005d5d;
+	--cat-3-light: #9f1853;
+	--cat-4-light: #fa4d56;
+	--cat-5-light: #570408;
+	--cat-6-light: #198038;
+	--cat-7-light: #002d9c;
+	--cat-8-light: #ee538b;
+	--cat-9-light: #b28600;
+	--cat-10-light: #009d9a;
+	--cat-11-light: #012749;
+	--cat-12-light: #8a3800;
+	--cat-13-light: #a56eff;
+
+	--cat-0-dark: #6929c4;
+	--cat-1-dark: #1192e8;
+	--cat-2-dark: #005d5d;
+	--cat-3-dark: #9f1853;
+	--cat-4-dark: #fa4d56;
+	--cat-5-dark: #570408;
+	--cat-6-dark: #198038;
+	--cat-7-dark: #002d9c;
+	--cat-8-dark: #ee538b;
+	--cat-9-dark: #b28600;
+	--cat-10-dark: #009d9a;
+	--cat-11-dark: #012749;
+	--cat-12-dark: #8a3800;
+	--cat-13-dark: #a56eff;
 }
 
 :root {
@@ -45,6 +74,20 @@ html {
 	--surface-4: var(--surface-4-dark);
 	--background: var(--background-dark);
 	--border: var(--border-dark);
+	--cat-0:var(--cat-0-dark);
+	--cat-1:var(--cat-1-dark);
+	--cat-2:var(--cat-2-dark);
+	--cat-3:var(--cat-3-dark);
+	--cat-4:var(--cat-4-dark);
+	--cat-5:var(--cat-5-dark);
+	--cat-6:var(--cat-6-dark);
+	--cat-7:var(--cat-7-dark);
+	--cat-8:var(--cat-8-dark);
+	--cat-9:var(--cat-9-dark);
+	--cat-10:var(--cat-10-dark);
+	--cat-11:var(--cat-11-dark);
+	--cat-12:var(--cat-12-dark);
+	--cat-11:var(--cat-13-dark);
 	--line-height: 1.5;
 	--font-weight: 400;
 	--font-size: 16px;
@@ -80,6 +123,20 @@ html {
 		--surface-4: var(--surface-4-light);
 		--background: var(--background-light);
 		--border: var(--border-light);
+		--cat-0:var(--cat-0-light);
+		--cat-1:var(--cat-1-light);
+		--cat-2:var(--cat-2-light);
+		--cat-3:var(--cat-3-light);
+		--cat-4:var(--cat-4-light);
+		--cat-5:var(--cat-5-light);
+		--cat-6:var(--cat-6-light);
+		--cat-7:var(--cat-7-light);
+		--cat-8:var(--cat-8-light);
+		--cat-9:var(--cat-9-light);
+		--cat-10:var(--cat-10-light);
+		--cat-11:var(--cat-11-light);
+		--cat-12:var(--cat-12-light);
+		--cat-11:var(--cat-13-light);
 	}
 }
 
@@ -96,6 +153,20 @@ html {
 	--surface-4: var(--surface-4-dark);
 	--background: var(--background-dark);
 	--border: var(--border-dark);
+	--cat-0:var(--cat-0-dark);
+	--cat-1:var(--cat-1-dark);
+	--cat-2:var(--cat-2-dark);
+	--cat-3:var(--cat-3-dark);
+	--cat-4:var(--cat-4-dark);
+	--cat-5:var(--cat-5-dark);
+	--cat-6:var(--cat-6-dark);
+	--cat-7:var(--cat-7-dark);
+	--cat-8:var(--cat-8-dark);
+	--cat-9:var(--cat-9-dark);
+	--cat-10:var(--cat-10-dark);
+	--cat-11:var(--cat-11-dark);
+	--cat-12:var(--cat-12-dark);
+	--cat-11:var(--cat-13-dark);
 }
 
 [color-scheme='light'] {
@@ -111,6 +182,20 @@ html {
 	--surface-4: var(--surface-4-light);
 	--background: var(--background-light);
 	--border: var(--border-light);
+	--cat-0:var(--cat-0-light);
+	--cat-1:var(--cat-1-light);
+	--cat-2:var(--cat-2-light);
+	--cat-3:var(--cat-3-light);
+	--cat-4:var(--cat-4-light);
+	--cat-5:var(--cat-5-light);
+	--cat-6:var(--cat-6-light);
+	--cat-7:var(--cat-7-light);
+	--cat-8:var(--cat-8-light);
+	--cat-9:var(--cat-9-light);
+	--cat-10:var(--cat-10-light);
+	--cat-11:var(--cat-11-light);
+	--cat-12:var(--cat-12-light);
+	--cat-11:var(--cat-13-light);
 }
 
 html,
